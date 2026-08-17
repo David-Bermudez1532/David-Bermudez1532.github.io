@@ -1,8 +1,127 @@
 <!DOCTYPE html>
-<html>
+<html lang="es">
 <head>
-    <meta http-equiv="refresh" content="0; url=login.html">
-    <script>window.location.href = "login.html";</script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Woofitos - Dispensador Inteligente</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <link rel="stylesheet" href="CSS/style.css?v=3">
+    <link rel="icon" href="IMG/favi.png" type="image/png">
 </head>
-<body></body>
+<body>
+    <header>
+        <article class="content">
+            <div class="menu">
+                
+                <div class="logo-container">
+                    <a href="index.html" class="logo"><img class="logo-img" src="IMG/logo.png" alt="Logo"></a>
+                    <a href="index.html" class="titulo">Woofitos</a>
+                </div>
+
+                <input type="checkbox" id="menu" />
+                <label for="menu">
+                    <img class="menu-icono" src="IMG/menu.png" alt="Menú">
+                </label>
+                
+                <nav class="barra-navegacion">
+                    <ul>
+                        <li><a href="#">Inicio</a></li>
+                        <li><a href="#caracteristicas">Características</a></li>
+                        <li><a href="panel.html">Panel Web</a></li>
+                        
+                        <!-- User Profile Actions -->
+                        <li>
+                            <a href="#" class="login-link" style="display: flex; align-items: center; gap: 8px; background: #f1f5f9; padding: 8px 16px; border-radius: 25px; text-decoration: none; transition: background 0.3s;" onclick="cerrarSesion()" onmouseover="this.style.background='#e2e8f0'" onmouseout="this.style.background='#f1f5f9'">
+                                <img src="IMG/login.png" alt="Perfil" style="width: 22px; height: 22px;">
+                                <span id="nombre-mascota-menu" style="font-size: 14px; font-weight: 600; color: #0f172a;">Perfil</span>
+                            </a>
+                        </li>
+                    </ul>
+                </nav>
+            </div>
+        </article>
+    </header>
+
+    <main class="container hero-section">
+        <div class="hero-texto">
+            <!-- Welcome Badge -->
+            <div id="saludo-badge" style="display: none; background: #e0e7ff; color: #4f46e5; padding: 6px 14px; border-radius: 20px; font-size: 14px; font-weight: 600; margin-bottom: 20px; width: fit-content;">
+                👋 Bienvenido al dispensador de <span id="nombre-mascota-badge"></span>
+            </div>
+            
+            <h1>Monitorea la alimentación de tu mascota en tiempo real</h1>
+            <p>Controla los niveles de comida y agua de tu dispensador inteligente con Arduino desde cualquier lugar. Mantén a tu mejor amigo siempre feliz.</p>
+            <a href="panel.html" class="btn-principal">Ir al Panel de Control</a>
+        </div>
+        <div class="hero-imagen">
+            <img src="IMG/dispensador.jpeg" alt="Dispensador Woofitos">
+        </div>
+    </main>
+
+    <section id="caracteristicas" class="features-section">
+        <div class="container">
+            <h2 class="section-title">¿Cómo funciona Woofitos?</h2>
+            
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">📊</div>
+                    <h3>Sensores de Precisión</h3>
+                    <p>Mide los niveles de agua y alimento con precisión utilizando nuestra tecnología integrada con sensores Arduino.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">📱</div>
+                    <h3>Monitoreo Web</h3>
+                    <p>Accede a tu panel desde cualquier celular o computadora y revisa el estado del plato en tiempo real.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">🔔</div>
+                    <h3>Alertas Tempranas</h3>
+                    <p>Recibe notificaciones cuando los niveles estén críticamente bajos para que nunca falte el alimento en casa.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer class="footer">
+        <div class="container footer-content">
+            <div class="footer-logo">
+                <h3>Woofitos IoT</h3>
+                <p>Tecnología para el cuidado de tu mejor amigo.</p>
+            </div>
+            <div class="footer-links">
+                <a href="#">Sobre el Proyecto</a>
+                <a href="#">Soporte Técnico</a>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2026 Woofitos. Proyecto de Dispensador Inteligente.</p>
+        </div>
+    </footer>
+
+    <!-- Session Management -->
+    <script>
+        const nombreMascota = localStorage.getItem("mascotaWoofitos");
+        
+        if (nombreMascota) {
+            // Update UI with user session data
+            document.getElementById("nombre-mascota-menu").innerText = nombreMascota;
+            document.getElementById("nombre-mascota-badge").innerText = nombreMascota;
+            document.getElementById("saludo-badge").style.display = "inline-block";
+        } else {
+            // Redirect to login if unauthenticated
+            window.location.href = "login.html";
+        }
+
+        function cerrarSesion() {
+            if(confirm("¿Quieres cerrar la sesión de " + nombreMascota + "?")) {
+                localStorage.removeItem("mascotaWoofitos");
+                window.location.href = "login.html";
+            }
+        }
+    </script>
+</body>
 </html>
