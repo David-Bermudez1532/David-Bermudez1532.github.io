@@ -3,51 +3,162 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Panel - Woofitos (DEMO)</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="CSS/style.css">
-</head>
-<body>
-    <div class="alerta-demo">⚠️ VERSIÓN DEMO (PORTAFOLIO): Datos simulados en tiempo real. No conectado al hardware.</div>
-
-    <img src="IMG/logo.png" alt="Woofitos Logo" class="logo-secreto" id="logo-admin">
-
-    <h1>¡Hora de comer, <span id="nombre-perrito">Mascota</span>! 🐾</h1>
+    <title>Panel de Control - Woofitos</title>
     
-    <div class="estado-contenedor">
-        <h2>Nivel del Plato</h2>
-        <h3 id="texto-gramos">500g</h3>
-        <div class="barra-contenedor">
-            <div class="barra-nivel" id="barra-comida"></div>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <link rel="stylesheet" href="CSS/style.css?v=5">
+    <link rel="icon" href="IMG/favi.png" type="image/png">
+    
+    <style>
+        /* Diseño del Panel estilo Dashboard */
+        .dashboard-container {
+            max-width: 1200px;
+            margin: 120px auto 40px auto;
+            padding: 0 20px;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+        }
+        
+        .panel-card {
+            background: white;
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        
+        .comida-indicador {
+            width: 100%;
+            height: 25px;
+            background: #e2e8f0;
+            border-radius: 12px;
+            margin: 20px 0;
+            overflow: hidden;
+        }
+        
+        .comida-nivel {
+            height: 100%;
+            background: #3b82f6; /* Empieza azul */
+            width: 0%;
+            transition: width 0.3s ease-out, background 0.3s;
+        }
+        
+        .peso-texto { font-size: 40px; font-weight: 800; color: #0f172a; }
+        
+        .btn-servir {
+            background: #3b82f6; color: white; border: none;
+            padding: 15px 40px; font-size: 18px; font-weight: 600;
+            border-radius: 30px; cursor: pointer; transition: 0.2s;
+            margin-top: 20px; box-shadow: 0 4px 15px rgba(59, 130, 246, 0.4);
+        }
+        .btn-servir:hover { transform: scale(1.05); background: #2563eb; }
+        .btn-servir:active { transform: scale(0.95); }
+
+        .camara-placeholder {
+            width: 100%; height: 300px; background: #1e293b;
+            border-radius: 15px; display: flex; align-items: center;
+            justify-content: center; color: white; flex-direction: column; gap: 10px;
+        }
+    </style>
+</head>
+<body style="background-color: #f8fafc;">
+    
+    <!-- Header -->
+    <header style="background: white; box-shadow: 0 2px 10px rgba(0,0,0,0.02);">
+        <article class="content">
+            <div class="menu">
+                <div class="logo-container">
+                    <a href="#" class="logo" ondblclick="adminRouting()"><img class="logo-img" src="IMG/logo.png" alt="Logo"></a>
+                    <a href="index.html" class="titulo">Woofitos</a>
+                </div>
+                <nav class="barra-navegacion">
+                    <ul>
+                        <li><a href="index.html">Inicio</a></li>
+                        <li>
+                            <a href="#" class="login-link" style="display: flex; align-items: center; gap: 8px; background: #f1f5f9; padding: 8px 16px; border-radius: 25px; text-decoration: none;" onclick="cerrarSesion()">
+                                <img src="IMG/login.png" alt="Perfil" style="width: 22px; height: 22px;">
+                                <span id="nombre-mascota-menu" style="font-size: 14px; font-weight: 600; color: #0f172a;"></span>
+                            </a>
+                        </li>
+                    </ul>
+                </nav>
+            </div>
+        </article>
+    </header>
+
+    <!-- Dashboard Grid -->
+    <div class="dashboard-container">
+        
+        <div class="panel-card">
+            <h2>Nivel de Comida</h2>
+            <p style="color: #64748b; margin-bottom: 20px;">Monitoreo en tiempo real (Simulado)</p>
+            
+            <div class="peso-texto" id="peso-texto">-- g</div>
+            
+            <div class="comida-indicador">
+                <div class="comida-nivel" id="barra-nivel"></div>
+            </div>
+            
+            <p style="font-weight: 600; font-size: 18px;" id="porcentaje-texto">Conectando...</p>
+            
+            <button class="btn-servir" onclick="ordenarComida()">🥩 Servir Ración</button>
+            <p id="estado-motor" style="margin-top: 15px; color: #10b981; font-weight: 600; display: none;">¡Activando el motor!</p>
         </div>
-        <p id="texto-porcentaje">100%</p>
+        
+        <div class="panel-card">
+            <h2>Cámara en Vivo</h2>
+            <p style="color: #64748b; margin-bottom: 20px;">Vigila tu dispensador</p>
+            
+            <div class="camara-placeholder">
+                <span style="font-size: 40px;">📷</span>
+                <span style="font-size: 20px; font-weight: 600;">Cámara Apagada</span>
+                <span style="font-size: 12px; color: #94a3b8;">(Reservado para el módulo de video)</span>
+            </div>
+        </div>
+
     </div>
 
-    <button class="btn-servir" onclick="servirComida()">🦴 Servir Comida</button>
-
-    <br><br>
-    <a href="#" onclick="cerrarSesion()" style="color: #ef4444; text-decoration: underline;">Cerrar Sesión</a>
-
+    <!-- Telemetry Simulation Logic -->
     <script>
-        const mascota = localStorage.getItem("mascotaWoofitos") || "Demo Dog";
-        document.getElementById("nombre-perrito").innerText = mascota;
+        // Session validation
+        const nombreMascota = localStorage.getItem("mascotaWoofitos");
+        if (nombreMascota) {
+            document.getElementById("nombre-mascota-menu").innerText = nombreMascota;
+        } else {
+            window.location.href = "login.html";
+        }
 
+        function cerrarSesion() {
+            if(confirm("¿Cerrar sesión?")) {
+                localStorage.removeItem("mascotaWoofitos");
+                window.location.href = "login.html";
+            }
+        }
+
+        // Hardware telemetry simulation for UI mockup
         let porcentajeActual = 100;
         let gramosMaximos = 500;
 
         function actualizarUI(porcentaje) {
-            document.getElementById("barra-comida").style.width = porcentaje + "%";
-            document.getElementById("texto-porcentaje").innerText = Math.round(porcentaje) + "%";
+            document.getElementById("barra-nivel").style.width = porcentaje + "%";
+            document.getElementById("porcentaje-texto").innerText = Math.round(porcentaje) + "% Lleno";
             
             let gramosActuales = Math.floor((porcentaje / 100) * gramosMaximos);
-            document.getElementById("texto-gramos").innerText = gramosActuales + "g";
+            document.getElementById("peso-texto").innerText = gramosActuales + " g";
 
-            if (porcentaje <= 25) {
-                document.getElementById("barra-comida").style.background = "#ef4444"; // Rojo
-            } else if (porcentaje <= 50) {
-                document.getElementById("barra-comida").style.background = "#eab308"; // Amarillo
+            // Visual alert threshold (< 20%)
+            if (porcentaje < 20) {
+                document.getElementById("barra-nivel").style.background = "#ef4444"; 
+                document.getElementById("porcentaje-texto").style.color = "#ef4444";
             } else {
-                document.getElementById("barra-comida").style.background = "#10b981"; // Verde
+                document.getElementById("barra-nivel").style.background = "#3b82f6"; 
+                document.getElementById("porcentaje-texto").style.color = "#3b82f6";
             }
         }
 
@@ -55,28 +166,32 @@
 
         setInterval(() => {
             if (porcentajeActual > 5) {
-                porcentajeActual -= (Math.random() * 8) + 2; // Resta entre 2% y 10%
+                porcentajeActual -= (Math.random() * 8) + 2;
                 actualizarUI(porcentajeActual);
             }
         }, 3000);
 
-        function servirComida() {
+        // Trigger dispensing mechanism
+        function ordenarComida() {
             porcentajeActual = 100;
             actualizarUI(porcentajeActual);
+            
+            const estado = document.getElementById("estado-motor");
+            estado.style.display = "block";
+            
+            setTimeout(() => {
+                estado.style.display = "none";
+            }, 3000); 
         }
 
-        document.getElementById("logo-admin").addEventListener("dblclick", function() {
+        // Admin routing
+        function adminRouting() {
             const miEmail = localStorage.getItem("emailWoofitos");
             if (miEmail === "davidbm.160408@gmail.com") {
-                window.open("admin.html", "_blank");
+                window.open("admin.html", "_blank"); 
             } else {
-                alert("🐶 Grrr... No hueles a mi dueño.\n\nPara ver la pestaña de Administrador, cierra sesión y entra con el correo 'davidbm.160408@gmail.com'.");
+                alert("Acceso denegado. Se requieren permisos de administrador.");
             }
-        });
-
-        function cerrarSesion() {
-            localStorage.clear();
-            window.location.href = "login.html";
         }
     </script>
 </body>
