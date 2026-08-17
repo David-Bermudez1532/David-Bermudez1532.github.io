@@ -3,16 +3,17 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Iniciar Sesión - Woofitos (DEMO)</title>
+    <title>Iniciar Sesión - Woofitos</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-    <!-- ATENCIÓN DAVID: Tienes que copiar tu carpeta CSS y tu carpeta IMG aquí -->
-    <link rel="stylesheet" href="CSS/style.css">
+    <link rel="stylesheet" href="CSS/style.css?v=7">
     <link rel="icon" href="IMG/favi.png" type="image/png">
 </head>
 <body>
+    
     <div class="login-pantalla-dividida">
+        
         <div class="login-lado-izquierdo">
             <img src="IMG/sesion.jpeg" alt="Fondo login Woofitos">
         </div>
@@ -20,50 +21,127 @@
         <div class="login-lado-derecho">
             <div class="login-form-container">
               <div class="login-header-bonito">
-                  <h2>¡Hola, Huellas! 🐾</h2>
-                  <p>Inicia sesión en Woofitos para ver a tu mejor amigo.</p>
+                  <a href="index.html" class="volver-inicio">← Volver al inicio</a>
+                  <div class="logo-centrado">
+                      <img src="IMG/logo.png" alt="Logo Woofitos" class="logo-bonito">
+                  </div>
+                  <h2>Cuenta Woofitos</h2>
               </div>
-
-              <!-- NOTA: Cambiamos onsubmit por nuestra propia función falsa -->
-              <form class="login-formulario" id="form-login" onsubmit="iniciarSesionFalsa(event)">
-                  <div class="login-input-grupo">
-                      <label for="email-login">Correo Electrónico</label>
+              
+              <!-- Tab Navigation -->
+              <div class="fender-switch">
+                  <button id="btn-tab-login" class="fender-tab activa" onclick="mostrarFormulario('login')">Iniciar sesión</button>
+                  <button id="btn-tab-registro" class="fender-tab" onclick="mostrarFormulario('registro')">Registrarse</button>
+              </div>
+              
+              <!-- Login Form -->
+              <form id="form-login" class="form-bonito" onsubmit="event.preventDefault(); enviarLogin();">
+                  <div class="input-grupo-bonito">
+                      <label>Correo Electrónico</label>
                       <input type="email" id="email-login" placeholder="ejemplo@correo.com" required>
                   </div>
-                  <div class="login-input-grupo">
-                      <label for="pass-login">Contraseña Secreta</label>
-                      <input type="password" id="pass-login" placeholder="••••••••" required>
+                  <div class="input-grupo-bonito">
+                      <label>Contraseña</label>
+                      <div class="input-con-icono">
+                          <input type="password" id="pass-login" placeholder="••••••••" required>
+                          <img src="IMG/ojo_abierto.png" class="ver-password-bonito" onclick="togglePass('pass-login', this)">
+                      </div>
                   </div>
-                  <button type="submit" class="login-btn-principal">Entrar al Panel</button>
+                  <div class="form-opciones">
+                      <label class="recordarme">
+                          <input type="checkbox"><span>Recordarme</span>
+                      </label>
+                      <a href="#" class="olvide-password" onclick="iniciarRecuperacion()">¿Olvidaste tu contraseña?</a>
+                  </div>
+                  <button type="submit" class="btn-login-bonito">Iniciar Sesión</button>
               </form>
               
-              <div class="login-enlaces-extra">
-                  <a href="#" class="olvide-password" onclick="iniciarRecuperacionFalsa()">¿Olvidaste tu contraseña?</a>
-                  <p>¿No tienes cuenta? <a href="#" class="registro-enlace" onclick="alert('Esta versión es un Demo para Portafolio. Usa cualquier correo para entrar.')">¡Regístrate aquí!</a></p>
-              </div>
+              <!-- Registration Form -->
+              <form id="form-registro" class="form-bonito" style="display: none;" onsubmit="event.preventDefault(); enviarRegistro();">
+                  <div class="input-grupo-bonito">
+                      <label>Tu Nombre</label>
+                      <input type="text" id="nombre-reg" placeholder="Ej. David" required>
+                  </div>
+                  <div class="input-grupo-bonito">
+                      <label>Nombre de tu Mascota 🐾</label>
+                      <input type="text" id="mascota-reg" placeholder="Ej. Firulais" required>
+                  </div>
+                  <div class="input-grupo-bonito">
+                      <label>Correo Electrónico</label>
+                      <input type="email" id="email-reg" placeholder="ejemplo@correo.com" required>
+                  </div>
+                  <div class="input-grupo-bonito">
+                      <label>Crea una Contraseña</label>
+                      <div class="input-con-icono">
+                          <input type="password" id="pass-reg" placeholder="••••••••" required>
+                          <img src="IMG/ojo_abierto.png" class="ver-password-bonito" onclick="togglePass('pass-reg', this)">
+                      </div>
+                  </div>
+                  <button type="submit" class="btn-login-bonito">Crear Cuenta</button>
+              </form>
+              
+              <!-- Form Logic & Authentication -->
+              <script>
+                  function mostrarFormulario(tipo) {
+                      const formLogin = document.getElementById('form-login');
+                      const formReg = document.getElementById('form-registro');
+                      const btnLogin = document.getElementById('btn-tab-login');
+                      const btnReg = document.getElementById('btn-tab-registro');
+              
+                      if (tipo === 'registro') {
+                          formLogin.style.display = 'none';
+                          formReg.style.display = 'block';
+                          btnReg.classList.add('activa');
+                          btnLogin.classList.remove('activa');
+                      } else {
+                          formReg.style.display = 'none';
+                          formLogin.style.display = 'block';
+                          btnLogin.classList.add('activa');
+                          btnReg.classList.remove('activa');
+                      }
+                  }
+              
+                  function togglePass(inputId, imgElement) {
+                      const input = document.getElementById(inputId);
+                      if (input.type === 'password') {
+                          input.type = 'text';
+                          imgElement.src = 'IMG/ojo_cerrado.png';
+                      } else {
+                          input.type = 'password';
+                          imgElement.src = 'IMG/ojo_abierto.png';
+                      }
+                  }
+                  
+                  // LocalStorage is used for demonstration purposes. Backend integration is disabled in this mockup.
+                  function enviarRegistro() {
+                      const mascota = document.getElementById('mascota-reg').value;
+                      const email = document.getElementById('email-reg').value;
+                      
+                      localStorage.setItem("mascotaWoofitos", mascota);
+                      localStorage.setItem("emailWoofitos", email);
+                      window.location.href = "index.html";
+                  }
+                  
+                  function enviarLogin() {
+                      const email = document.getElementById('email-login').value;
+                      
+                      localStorage.setItem("mascotaWoofitos", "Demo Dog");
+                      localStorage.setItem("emailWoofitos", email);
+                      window.location.href = "index.html";
+                  }
+
+                  function iniciarRecuperacion() {
+                      const email = prompt("Escribe tu correo electrónico para buscar tu cuenta:");
+                      if (!email) return;
+                      
+                      const mascota = prompt("Pregunta de seguridad:\n¿Cómo se llama la mascota que registraste en esa cuenta?");
+                      if (!mascota) return;
+                      
+                      alert("Identidad confirmada (Modo Demostración)\n\nTu contraseña temporal es: demopass123");
+                  }
+              </script>
             </div>
         </div>
     </div>
-
-    <!-- SCRIPT FALSO DE DEMOSTRACIÓN -->
-    <script>
-        function iniciarSesionFalsa(event) {
-            event.preventDefault(); // Evitar que la página recargue
-            
-            const email = document.getElementById("email-login").value;
-            
-            // Simulamos que el inicio fue exitoso
-            localStorage.setItem("emailWoofitos", email);
-            localStorage.setItem("mascotaWoofitos", "Demo Dog"); // Mascota inventada
-            
-            window.location.href = "panel.html"; // Brincamos al panel
-        }
-
-        function iniciarRecuperacionFalsa() {
-            prompt("🐶 Escribe tu correo electrónico para buscar tu cuenta:");
-            prompt("🔒 PREGUNTA DE SEGURIDAD: ¿Cómo se llama la mascota que registraste?");
-            alert("🔐 ¡IDENTIDAD CONFIRMADA! (Modo Demo)\n\nTu contraseña es: demopass123");
-        }
-    </script>
 </body>
 </html>
