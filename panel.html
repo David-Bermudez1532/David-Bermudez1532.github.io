@@ -5,10 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Panel - Woofitos (DEMO)</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-    <!-- ATENCIÓN DAVID: Tienes que copiar tu carpeta CSS y tu carpeta IMG aquí -->
     <link rel="stylesheet" href="CSS/style.css">
     <style>
-        /* Agregamos el CSS básico del panel por si no viene en style.css */
         body { background-color: #0f172a; color: white; font-family: 'Inter', sans-serif; text-align: center; }
         .barra-contenedor { width: 80%; max-width: 400px; height: 30px; background: #334155; border-radius: 15px; margin: 20px auto; overflow: hidden; border: 2px solid #475569;}
         .barra-nivel { width: 100%; height: 100%; background: linear-gradient(90deg, #10b981, #34d399); transition: width 0.5s ease-in-out, background-color 0.5s ease-in-out; }
@@ -41,13 +39,10 @@
     <br><br>
     <a href="#" onclick="cerrarSesion()" style="color: #ef4444; text-decoration: underline;">Cerrar Sesión</a>
 
-    <!-- SCRIPT FALSO DE DEMOSTRACIÓN -->
     <script>
-        // 1. CARGAMOS LOS DATOS DEL LOGIN
         const mascota = localStorage.getItem("mascotaWoofitos") || "Demo Dog";
         document.getElementById("nombre-perrito").innerText = mascota;
 
-        // 2. SIMULACIÓN DE HARDWARE (El plato se vacía poco a poco)
         let porcentajeActual = 100;
         let gramosMaximos = 500;
 
@@ -58,7 +53,6 @@
             let gramosActuales = Math.floor((porcentaje / 100) * gramosMaximos);
             document.getElementById("texto-gramos").innerText = gramosActuales + "g";
 
-            // Cambiar color como en el original
             if (porcentaje <= 25) {
                 document.getElementById("barra-comida").style.background = "#ef4444"; // Rojo
             } else if (porcentaje <= 50) {
@@ -70,7 +64,6 @@
 
         actualizarUI(100);
 
-        // Bucle que resta comida cada 3 segundos (Para presumir animación)
         setInterval(() => {
             if (porcentajeActual > 5) {
                 porcentajeActual -= (Math.random() * 8) + 2; // Resta entre 2% y 10%
@@ -78,13 +71,11 @@
             }
         }, 3000);
 
-        // 3. BOTÓN DE SERVIR
         function servirComida() {
             porcentajeActual = 100;
             actualizarUI(porcentajeActual);
         }
 
-        // 4. ACCESO AL ADMIN (Hack secreto)
         document.getElementById("logo-admin").addEventListener("dblclick", function() {
             const miEmail = localStorage.getItem("emailWoofitos");
             if (miEmail === "davidbm.160408@gmail.com") {
@@ -94,7 +85,6 @@
             }
         });
 
-        // 5. CERRAR SESIÓN
         function cerrarSesion() {
             localStorage.clear();
             window.location.href = "login.html";
