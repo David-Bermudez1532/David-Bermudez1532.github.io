@@ -31,4 +31,4 @@ Aunque esta versión es solo el cascarón visual, el producto real detrás de Wo
 * JavaScript (ES6+, LocalStorage, SetInterval)
 
 ---
-*Diseñado y programado por David Bermúdez.*
+*Diseñado y programado por David Bermudez.*
