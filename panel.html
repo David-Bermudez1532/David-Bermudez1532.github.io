@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Panel - Woofitos (DEMO)</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <!-- ATENCIÓN DAVID: Tienes que copiar tu carpeta CSS y tu carpeta IMG aquí -->
+    <link rel="stylesheet" href="CSS/style.css">
+    <style>
+        /* Agregamos el CSS básico del panel por si no viene en style.css */
+        body { background-color: #0f172a; color: white; font-family: 'Inter', sans-serif; text-align: center; }
+        .barra-contenedor { width: 80%; max-width: 400px; height: 30px; background: #334155; border-radius: 15px; margin: 20px auto; overflow: hidden; border: 2px solid #475569;}
+        .barra-nivel { width: 100%; height: 100%; background: linear-gradient(90deg, #10b981, #34d399); transition: width 0.5s ease-in-out, background-color 0.5s ease-in-out; }
+        .logo-secreto { width: 150px; cursor: pointer; transition: transform 0.3s; margin-top: 50px;}
+        .logo-secreto:hover { transform: scale(1.05); }
+        .btn-servir { background: #3b82f6; color: white; font-size: 1.2rem; font-weight: bold; padding: 15px 40px; border: none; border-radius: 30px; cursor: pointer; box-shadow: 0 4px 15px rgba(59, 130, 246, 0.4); margin-top: 20px; transition: 0.3s;}
+        .btn-servir:hover { background: #2563eb; transform: translateY(-2px); }
+        .btn-servir:active { transform: translateY(2px); }
+        .alerta-demo { background: #f59e0b; color: #000; padding: 10px; font-weight: bold; }
+    </style>
+</head>
+<body>
+    <div class="alerta-demo">⚠️ VERSIÓN DEMO (PORTAFOLIO): Datos simulados en tiempo real. No conectado al hardware.</div>
+
+    <img src="IMG/logo.png" alt="Woofitos Logo" class="logo-secreto" id="logo-admin">
+
+    <h1>¡Hora de comer, <span id="nombre-perrito">Mascota</span>! 🐾</h1>
+    
+    <div class="estado-contenedor">
+        <h2>Nivel del Plato</h2>
+        <h3 id="texto-gramos">500g</h3>
+        <div class="barra-contenedor">
+            <div class="barra-nivel" id="barra-comida"></div>
+        </div>
+        <p id="texto-porcentaje">100%</p>
+    </div>
+
+    <button class="btn-servir" onclick="servirComida()">🦴 Servir Comida</button>
+
+    <br><br>
+    <a href="#" onclick="cerrarSesion()" style="color: #ef4444; text-decoration: underline;">Cerrar Sesión</a>
+
+    <!-- SCRIPT FALSO DE DEMOSTRACIÓN -->
+    <script>
+        // 1. CARGAMOS LOS DATOS DEL LOGIN
+        const mascota = localStorage.getItem("mascotaWoofitos") || "Demo Dog";
+        document.getElementById("nombre-perrito").innerText = mascota;
+
+        // 2. SIMULACIÓN DE HARDWARE (El plato se vacía poco a poco)
+        let porcentajeActual = 100;
+        let gramosMaximos = 500;
+
+        function actualizarUI(porcentaje) {
+            document.getElementById("barra-comida").style.width = porcentaje + "%";
+            document.getElementById("texto-porcentaje").innerText = Math.round(porcentaje) + "%";
+            
+            let gramosActuales = Math.floor((porcentaje / 100) * gramosMaximos);
+            document.getElementById("texto-gramos").innerText = gramosActuales + "g";
+
+            // Cambiar color como en el original
+            if (porcentaje <= 25) {
+                document.getElementById("barra-comida").style.background = "#ef4444"; // Rojo
+            } else if (porcentaje <= 50) {
+                document.getElementById("barra-comida").style.background = "#eab308"; // Amarillo
+            } else {
+                document.getElementById("barra-comida").style.background = "#10b981"; // Verde
+            }
+        }
+
+        actualizarUI(100);
+
+        // Bucle que resta comida cada 3 segundos (Para presumir animación)
+        setInterval(() => {
+            if (porcentajeActual > 5) {
+                porcentajeActual -= (Math.random() * 8) + 2; // Resta entre 2% y 10%
+                actualizarUI(porcentajeActual);
+            }
+        }, 3000);
+
+        // 3. BOTÓN DE SERVIR
+        function servirComida() {
+            porcentajeActual = 100;
+            actualizarUI(porcentajeActual);
+        }
+
+        // 4. ACCESO AL ADMIN (Hack secreto)
+        document.getElementById("logo-admin").addEventListener("dblclick", function() {
+            const miEmail = localStorage.getItem("emailWoofitos");
+            if (miEmail === "davidbm.160408@gmail.com") {
+                window.open("admin.html", "_blank");
+            } else {
+                alert("🐶 Grrr... No hueles a mi dueño.\n\nPara ver la pestaña de Administrador, cierra sesión y entra con el correo 'davidbm.160408@gmail.com'.");
+            }
+        });
+
+        // 5. CERRAR SESIÓN
+        function cerrarSesion() {
+            localStorage.clear();
+            window.location.href = "login.html";
+        }
+    </script>
+</body>
+</html>

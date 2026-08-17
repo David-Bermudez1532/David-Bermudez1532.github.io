@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Iniciar Sesión - Woofitos (DEMO)</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <!-- ATENCIÓN DAVID: Tienes que copiar tu carpeta CSS y tu carpeta IMG aquí -->
+    <link rel="stylesheet" href="CSS/style.css">
+    <link rel="icon" href="IMG/favi.png" type="image/png">
+</head>
+<body>
+    <div class="login-pantalla-dividida">
+        <div class="login-lado-izquierdo">
+            <img src="IMG/sesion.jpeg" alt="Fondo login Woofitos">
+        </div>
+        
+        <div class="login-lado-derecho">
+            <div class="login-form-container">
+              <div class="login-header-bonito">
+                  <h2>¡Hola, Huellas! 🐾</h2>
+                  <p>Inicia sesión en Woofitos para ver a tu mejor amigo.</p>
+              </div>
+
+              <!-- NOTA: Cambiamos onsubmit por nuestra propia función falsa -->
+              <form class="login-formulario" id="form-login" onsubmit="iniciarSesionFalsa(event)">
+                  <div class="login-input-grupo">
+                      <label for="email-login">Correo Electrónico</label>
+                      <input type="email" id="email-login" placeholder="ejemplo@correo.com" required>
+                  </div>
+                  <div class="login-input-grupo">
+                      <label for="pass-login">Contraseña Secreta</label>
+                      <input type="password" id="pass-login" placeholder="••••••••" required>
+                  </div>
+                  <button type="submit" class="login-btn-principal">Entrar al Panel</button>
+              </form>
+              
+              <div class="login-enlaces-extra">
+                  <a href="#" class="olvide-password" onclick="iniciarRecuperacionFalsa()">¿Olvidaste tu contraseña?</a>
+                  <p>¿No tienes cuenta? <a href="#" class="registro-enlace" onclick="alert('Esta versión es un Demo para Portafolio. Usa cualquier correo para entrar.')">¡Regístrate aquí!</a></p>
+              </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- SCRIPT FALSO DE DEMOSTRACIÓN -->
+    <script>
+        function iniciarSesionFalsa(event) {
+            event.preventDefault(); // Evitar que la página recargue
+            
+            const email = document.getElementById("email-login").value;
+            
+            // Simulamos que el inicio fue exitoso
+            localStorage.setItem("emailWoofitos", email);
+            localStorage.setItem("mascotaWoofitos", "Demo Dog"); // Mascota inventada
+            
+            window.location.href = "panel.html"; // Brincamos al panel
+        }
+
+        function iniciarRecuperacionFalsa() {
+            prompt("🐶 Escribe tu correo electrónico para buscar tu cuenta:");
+            prompt("🔒 PREGUNTA DE SEGURIDAD: ¿Cómo se llama la mascota que registraste?");
+            alert("🔐 ¡IDENTIDAD CONFIRMADA! (Modo Demo)\n\nTu contraseña es: demopass123");
+        }
+    </script>
+</body>
+</html>

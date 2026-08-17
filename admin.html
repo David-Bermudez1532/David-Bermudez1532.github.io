@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Bóveda Woofitos - ADMIN (DEMO)</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
+    <style>
+        body { background-color: #050505; color: #00ff00; font-family: 'Inter', sans-serif; padding: 40px; }
+        h1 { color: #fff; text-transform: uppercase; letter-spacing: 2px;}
+        table { width: 100%; border-collapse: collapse; margin-top: 20px; background: #111; border-radius: 8px; overflow: hidden;}
+        th, td { border: 1px solid #333; padding: 12px; text-align: left; }
+        th { background: #222; color: #fff; }
+        .btn-borrar {
+            background: #e74c3c; color: white; border: none; padding: 8px 12px;
+            border-radius: 4px; cursor: pointer; font-weight: bold; transition: 0.3s;
+        }
+        .btn-borrar:hover { background: #c0392b; transform: scale(1.05);}
+        .alerta-demo { background: #f59e0b; color: #000; padding: 10px; font-weight: bold; margin-bottom: 20px; border-radius: 4px; text-align: center;}
+    </style>
+</head>
+<body>
+    <div class="alerta-demo">⚠️ MODO PORTAFOLIO: Base de datos estática simulada. No hay conexión con SQLite real.</div>
+
+    <h1>🛡️ Cuartel General de Woofitos</h1>
+    <p>Conectado como: <span id="admin-email">davidbm.160408@gmail.com</span></p>
+    
+    <table id="tabla-usuarios">
+        <thead>
+            <tr>
+                <th>ID</th><th>Dueño</th><th>Mascota</th><th>Correo</th><th>Acción</th>
+            </tr>
+        </thead>
+        <tbody id="tabla-cuerpo">
+            <!-- Datos Hardcoded para el Demo -->
+            <tr id="fila-1">
+                <td>1</td><td>David Bermudez</td><td>Cheto</td><td>davidbm.160408@gmail.com</td>
+                <td>👑 CEO (Inmortal)</td>
+            </tr>
+            <tr id="fila-2">
+                <td>2</td><td>Carlos López</td><td>Toby</td><td>carlos.lopez@example.com</td>
+                <td><button class="btn-borrar" onclick="eliminarFalsa('fila-2', 'carlos.lopez@example.com')">🗑️ Eliminar</button></td>
+            </tr>
+            <tr id="fila-3">
+                <td>3</td><td>María García</td><td>Max</td><td>mgarcia123@example.com</td>
+                <td><button class="btn-borrar" onclick="eliminarFalsa('fila-3', 'mgarcia123@example.com')">🗑️ Eliminar</button></td>
+            </tr>
+            <tr id="fila-4">
+                <td>4</td><td>Hacker Ruso</td><td>VirusDog</td><td>hacker@ru.io</td>
+                <td><button class="btn-borrar" onclick="eliminarFalsa('fila-4', 'hacker@ru.io')">🗑️ Eliminar</button></td>
+            </tr>
+        </tbody>
+    </table>
+
+    <script>
+        // Verificación simulada
+        const miEmail = localStorage.getItem("emailWoofitos");
+        if (miEmail !== "davidbm.160408@gmail.com") {
+            alert("⚠️ ALERTA DE INTRUSO. SISTEMA BLOQUEADO.");
+            window.location.href = "login.html";
+        }
+
+        function eliminarFalsa(idFila, correoAbusar) {
+            if(confirm(`¿Estás 100% seguro de borrar a ${correoAbusar} de la base de datos de Woofitos?`)) {
+                // Simulamos borrar del DOM
+                const fila = document.getElementById(idFila);
+                fila.remove();
+            }
+        }
+    </script>
+</body>
+</html>
