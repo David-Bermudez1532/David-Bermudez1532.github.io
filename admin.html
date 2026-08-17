@@ -31,7 +31,6 @@
             </tr>
         </thead>
         <tbody id="tabla-cuerpo">
-            <!-- Datos Hardcoded para el Demo -->
             <tr id="fila-1">
                 <td>1</td><td>David Bermudez</td><td>Cheto</td><td>davidbm.160408@gmail.com</td>
                 <td>👑 CEO (Inmortal)</td>
@@ -52,7 +51,6 @@
     </table>
 
     <script>
-        // Verificación simulada
         const miEmail = localStorage.getItem("emailWoofitos");
         if (miEmail !== "davidbm.160408@gmail.com") {
             alert("⚠️ ALERTA DE INTRUSO. SISTEMA BLOQUEADO.");
@@ -61,7 +59,6 @@
 
         function eliminarFalsa(idFila, correoAbusar) {
             if(confirm(`¿Estás 100% seguro de borrar a ${correoAbusar} de la base de datos de Woofitos?`)) {
-                // Simulamos borrar del DOM
                 const fila = document.getElementById(idFila);
                 fila.remove();
             }
