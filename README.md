@@ -10,7 +10,7 @@ Este repositorio aloja la versión *Frontend Estática* del panel de control de 
 
 ## ✨ Características de la Interfaz
 
-* 🎨 **Diseño Moderno:** Interfaz responsiva *Single Page Application* (SPA) basada en Glassmorphism y Dark Mode, diseñada para usarse en dispositivos móviles y de escritorio.
+* 🎨 **Diseño Moderno:** Interfaz responsiva *Single Page Application* (SPA) basada en Glassmorphism, diseñada para usarse en dispositivos móviles y de escritorio.
 * 🔐 **Simulación de Login:** Flujo completo de inicio de sesión y simulación de la recuperación de contraseña basada en "Preguntas de Seguridad".
 * 📊 **Telemetría Animada:** Panel de control principal que simula la recepción de datos de un sensor analógico (como una celda de carga o potenciómetro) en tiempo real, cambiando de color (Verde/Amarillo/Rojo) según el nivel del plato.
 * 🛡️ **Panel de Administración (Hidden Feature):** Interfaz secreta (CRUD) de gestión de usuarios (Bóveda), accesible únicamente mediante roles simulados de Administrador, donde se demuestran funciones de borrado de bases de datos.
